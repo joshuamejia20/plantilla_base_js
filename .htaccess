@@ -1,0 +1,47 @@
+<IfModule mod_rewrite.c>
+    # No mostrar contenido del directorio que no contengan archivos index
+    Options All -Indexes
+    # Evitar listado de directorios
+    # IndexIgnore *.php *.html
+    # Procesa con diferente tipo los archivos como scripts de PHP
+    # AddType application/x-httpd-php .foo
+    # Especificar códificación de caracteres
+    AddDefaultCharset utf-8
+
+    # Mensaje de error personalizado en ubicación local
+    ErrorDocument 404 /lojexdata/error.html
+
+    # Redirigir peticiones
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # MODULOS POR DEFECTO DEL SISTEMA
+    RewriteRule ^pupusa.py$ app/views/vehiculos.html [L]
+    RewriteRule ^tamal.php$ app/views/prueba.html [L]
+    # DECLARACION DE URLS A
+
+    # DECLARACION DE ARCHIVOS JS
+
+</IfModule>
+
+# Limpiar cache del navegador
+<FilesMatch "\.(css|flv|gif|htm|html|ico|jpe|jpeg|jpg|js|mp3|mp4|png|swf|txt)$">
+    <IfModule mod_expires.c>
+        # ExpiresActive Off
+    </IfModule>
+    <IfModule mod_headers.c>
+        # FileETag None
+        # Header unset ETag
+        # Header unset Pragma
+        # Header unset Cache-Control
+        # Header unset Last-Modified
+        # Header set Pragma "no-cache"
+        # Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        # Header set Expires "jue, 1 Jan 1970 00:00:00 GMT"
+    </IfModule>
+</FilesMatch>
+# Capa de seguridad adicional que bloquea ataques XSS
+<IfModule mod_headers.c>
+    # Header set X-XSS-Protection "1; mode=block"
+</IfModule>
